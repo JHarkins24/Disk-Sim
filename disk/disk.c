@@ -43,7 +43,7 @@ int log2phys(int logaddr, physaddr_t *phaddr) {
 
 int phys2log(physaddr_t *phaddr)
 {
-    // TODO: implement
+    // TODO: AFRICA
 
     return (phaddr->head * NUM_OF_SECTS) + phaddr->sect + (phaddr->cyl * SECT_SIZE);
 }
@@ -63,40 +63,48 @@ void printTransl(int logaddr)
         printf("ERROR: invalid logical address!\n");
 }
 
-int readDisk(int logical_block_num, int numOfBlocks, void **buffer)
-{
-    //numOfBlocks is the number of sectors we have
-    // TODO: implement
+int readDisk(int logical_block_num, int numOfBlocks, void **buffer) {
+    // TODO: AFRICA?
     //block to read
-    char *block = (char *) malloc(numOfBlocks * sizeof(char *) * SECT_SIZE );
+    //char *block = (char *) malloc(numOfBlocks * sizeof(char *) * SECT_SIZE);
     //Physical and Logical Addresses
-    physaddr_t *physaddr1 = (physaddr_t*)malloc(sizeof(physaddr_t));
+    physaddr_t *physaddr1 = (physaddr_t *) malloc(sizeof(physaddr_t));
     int logaddr = phys2log(physaddr1);
     //Physical and logical Addresses
-   if(logical_block_num > SECT_SIZE * numOfBlocks)
-   {
+    if (logical_block_num > MAX_LOGICAL_SECTOR) {
         for (int i = 0; i < numOfBlocks; ++i) {
-
+            phys2log(physaddr1 + i);//iterates through the sectors
             for (int j = 0; j < NUM_OF_SECTS; ++j) {
-
-                buffer[logaddr] = disk[logical_block_num][physaddr1->sect][i];
-
+                buffer[j] = disk[(physaddr1->sect) - 1][(physaddr1->head) - 1][(physaddr1->cyl) - 1];
             }
         }
         return 0;
-   }
-   else
-   {
-       printf("size error");
-       return 1;
-   }
-    //
-
+    } else {
+        printf("size error");
+        return 1;
+    }
 }
 
-int writeDisk(int logicalBlockNum, int numOfSectors, void *buffer)
+int writeDisk(int logical_block_num, int numOfSectors, void *buffer)
 {
-    // TODO: implement
+    // TODO: AFRICA?
+    physaddr_t *physadd  = (physaddr_t *) malloc(sizeof(physaddr_t));
+    int logaddr = phys2log(physadd);
+    for (int i = 0; i < numOfSectors ; ++i) {
+        phys2log(physadd + 1);
+        for (int j = 0; j < NUM_OF_SECTS ; ++j) {
+            if(logical_block_num > MAX_LOGICAL_SECTOR)
+            {
+                printf("logical block amount exceeds the MAX_LOGICAL_SECTORS");
+                return LOGICAL_ADDRESS_ERROR;
+            }
+            else
+            {
+                disk[physadd->sect][physadd->cyl][physadd->head] = buffer[physadd-];
+                return 0;
+            }
+        }
+    }
 
 }
 
