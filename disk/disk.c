@@ -7,7 +7,7 @@
 //ioctl()
 //remember to use
 #include "disk.h"
-
+//#define_DEBUG
 disk_t disk;
 
 int log2phys(int logaddr, physaddr_t *phaddr) {
@@ -88,10 +88,12 @@ int readDisk(int logical_block_num, int numOfBlocks, void **buffer) {
 int writeDisk(int logical_block_num, int numOfSectors, void *buffer)
 {
     // TODO: AFRICA?
-    physaddr_t *physadd  = (physaddr_t *) malloc(sizeof(physaddr_t));
+    char *block;
+    physaddr_t *physadd  = (physaddr_t *)malloc(sizeof(physaddr_t));
     int logaddr = phys2log(physadd);
     for (int i = 0; i < numOfSectors ; ++i) {
-        phys2log(physadd + 1);
+        log2phys(logical_block_num , physadd + 1);
+        block = disk[(physadd->sect) - 1][(physadd->head) - 1][(physadd->cyl) - 1];//for setting a copy from the  disc
         for (int j = 0; j < NUM_OF_SECTS ; ++j) {
             if(logical_block_num > MAX_LOGICAL_SECTOR)
             {
@@ -100,7 +102,8 @@ int writeDisk(int logical_block_num, int numOfSectors, void *buffer)
             }
             else
             {
-                disk[physadd->sect][physadd->cyl][physadd->head] = buffer[physadd-];
+                //pointer arithmetic
+                buffer[j] = (char*)*block;//block[j] = *(char*)buffer + j
                 return 0;
             }
         }
