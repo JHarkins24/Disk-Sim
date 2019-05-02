@@ -65,16 +65,39 @@ void printTransl(int logaddr)
 
 int readDisk(int logical_block_num, int numOfBlocks, void **buffer)
 {
+    //numOfBlocks is the number of sectors we have
     // TODO: implement
-    //figure out how many blocks to rea
+    //block to read
+    char *block = (char *) malloc(numOfBlocks * sizeof(char *) * SECT_SIZE );
+    //Physical and Logical Addresses
+    physaddr_t *physaddr1 = (physaddr_t*)malloc(sizeof(physaddr_t));
+    int logaddr = phys2log(physaddr1);
+    //Physical and logical Addresses
+   if(logical_block_num > SECT_SIZE * numOfBlocks)
+   {
+        for (int i = 0; i < numOfBlocks; ++i) {
+
+            for (int j = 0; j < NUM_OF_SECTS; ++j) {
+
+                buffer[logaddr] = disk[logical_block_num][physaddr1->sect][i];
+
+            }
+        }
+        return 0;
+   }
+   else
+   {
+       printf("size error");
+       return 1;
+   }
+    //
 
 }
 
 int writeDisk(int logicalBlockNum, int numOfSectors, void *buffer)
 {
     // TODO: implement
-    char *block =
-    return 0;
+
 }
 
 int main(int argc, char *argv[])
