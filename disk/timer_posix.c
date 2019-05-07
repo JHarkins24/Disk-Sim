@@ -1,10 +1,7 @@
 #include <sys/signal.h>
 #include <time.h>
 #include <sys/time.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
+#include "disk.h"
 
 #define COUNTDOWN_VALUE 10
 
@@ -13,25 +10,14 @@
 
 timer_t gTimerid;
 int count = COUNTDOWN_VALUE;
+int size;
 
 void disk_timer(void)
 {
-    blockNumber = Max blocks 
-        //to track  the thingy
-    Node = something I guess
-    if(Node = value )
-    {
-        read();
-        printf();
-        write();
-    }
-    else(node )
-    {
-        read();
-        printf();
-        write();
-    }
+    struct itimerspec value;
+    //simfs generate content
 }
+
 void start_timer(void)
 {
     struct itimerspec value;
@@ -75,9 +61,43 @@ void timer_callback(int sig)
     count--;
 }
 
+char GenerateContent(int size)
+{
+    size = (size <= 0 ? rand() % 1000 : size); // arbitrarily chosen as an example
+
+    char *content = malloc(size);
+
+    int firstPrintable = ' ';
+    int len = '~' - firstPrintable;
+
+    for (int i = 0; i < size - 1; i++)
+        *(content + i) = firstPrintable + rand() % len;
+
+    content[size - 1] = '\0';
+    return content;
+}
+int makeRandomCrapHappen(int lower, int upper,)
+{
+    int num = (rand() %(upper - lower + 1)) + lower;
+    return num;
+}
+
 int main(int ac, char **av)
 {
+    char* buffer = malloc( 8 * SECT_SIZE);
+    size = makeRandomCrapHappen(0, SECT_SIZE);
     (void) signal(SIGALRM, timer_callback);
     start_timer();
+    *buffer = GenerateContent(size);
+    if(ac < 2)
+    {
+        writeDisk(makeRandomCrapHappen(0, MAX_LOGICAL_SECTOR) , size , buffer);
+        printf();
+        readDisk(makeRandomCrapHappen(0, MAX_LOGICAL_SECTOR) , size , buffer)
+    }
+    else if()
+    {
+
+    }
     while (count >= 0);
 }
