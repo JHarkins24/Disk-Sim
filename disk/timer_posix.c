@@ -16,14 +16,20 @@ int count = COUNTDOWN_VALUE;
 
 void disk_timer(void)
 {
-
-    if()
+    blockNumber = Max blocks 
+        //to track  the thingy
+    Node = something I guess
+    if(Node = value )
     {
-
+        read();
+        printf();
+        write();
     }
-    else()
+    else(node )
     {
-
+        read();
+        printf();
+        write();
     }
 }
 void start_timer(void)
